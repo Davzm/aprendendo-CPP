@@ -8,8 +8,8 @@
 // arrays como em C (nada de string data[10]).
 struct Tarefa {
     int id;
-    std::string descricao;
-    std::string data;        // dd/mm/aaaa (formato livre por enquanto)
+    std :: string descricao;
+    std :: string data;        // dd/mm/aaaa (formato livre por enquanto)
     bool concluida = false;
 };
 
@@ -40,7 +40,7 @@ public:
     bool vazia() const;
 
 private:
-    std::vector<Tarefa> tarefas;
+    std :: vector<Tarefa> tarefas;
     int proximoId = 1;
 };
 

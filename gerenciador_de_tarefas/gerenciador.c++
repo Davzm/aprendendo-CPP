@@ -1,24 +1,43 @@
 #include "gerenciador.h++"
 #include <iostream>
+#include <string>
 using namespace std;
 
 void ListaTarefas::adicionar(const string& descricao, const string& data) {
     // TODO: criar uma Tarefa com id = proximoId, guardar no vector
     // e incrementar proximoId.
-    (void)descricao;
-    (void)data;
+    Tarefa t;
+
+    t.descricao = descricao;
+    t.data = data;
+    t.id = proximoId;
+    tarefas.push_back(t);
+    proximoId++;
+
+    
 }
 
 bool ListaTarefas::remover(int id) {
     // TODO: procurar a tarefa pelo id e apagá-la do vector.
     // Dica: percorra com índice e use tarefas.erase(tarefas.begin() + i).
-    (void)id;
+
+    for(size_t i = 0; i < tarefas.size(); i++){
+        if(tarefas[i].id == id){
+            tarefas.erase(tarefas.begin() + i);
+            return true;
+        }
+    }
     return false;
 }
 
-bool ListaTarefas::concluir(int id) {
+bool ListaTarefas::concluir(int id){
     // TODO: procurar pelo id e marcar concluida = true.
-    (void)id;
+    for(size_t i = 0; i < tarefas.size(); i++){
+        if(tarefas[i].id == id){
+            tarefas[i].concluida = true;
+            return true;
+        }
+    }
     return false;
 }
 
