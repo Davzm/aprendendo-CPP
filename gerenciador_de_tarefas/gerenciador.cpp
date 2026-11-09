@@ -1,4 +1,4 @@
-#include "gerenciador.h++"
+#include "gerenciador.hpp"
 #include <iostream>
 #include <string>
 using namespace std;
@@ -12,15 +12,14 @@ void ListaTarefas::adicionar(const string& descricao, const string& data) {
     t.data = data;
     t.id = proximoId;
     tarefas.push_back(t);
-    proximoId++;
-
-    
+    proximoId++;    
 }
 
 bool ListaTarefas::remover(int id) {
     // TODO: procurar a tarefa pelo id e apagá-la do vector.
     // Dica: percorra com índice e use tarefas.erase(tarefas.begin() + i).
-
+    if(vazia()) return false;
+    
     for(size_t i = 0; i < tarefas.size(); i++){
         if(tarefas[i].id == id){
             tarefas.erase(tarefas.begin() + i);
@@ -32,6 +31,7 @@ bool ListaTarefas::remover(int id) {
 
 bool ListaTarefas::concluir(int id){
     // TODO: procurar pelo id e marcar concluida = true.
+    if(vazia()) return false;
     for(size_t i = 0; i < tarefas.size(); i++){
         if(tarefas[i].id == id){
             tarefas[i].concluida = true;
@@ -43,7 +43,11 @@ bool ListaTarefas::concluir(int id){
 
 const Tarefa* ListaTarefas::buscar(int id) const {
     // TODO: retornar &tarefas[i] se achar, nullptr se não achar.
-    (void)id;
+    for(size_t i = 0; i < tarefas.size(); i++){
+        if(tarefas[i].id == id){
+            return &tarefas[i];
+        }
+    }
     return nullptr;
 }
 
@@ -51,6 +55,16 @@ void ListaTarefas::listar() const {
     // TODO: se estiver vazia, avisar. Senão, imprimir uma linha por tarefa:
     // [x] 1 - Estudar C++ (10/11/2026)
     // Dica: for (const Tarefa& t : tarefas) { ... }
+    if(vazia()) cout << "A lista de tarefas está vazia\n";
+    string concluida;
+    for(Tarefa t : tarefas){
+        if(t.concluida == true){
+            concluida = "concluida";
+        }else{
+            concluida = "não concluida";
+        }
+        cout << "[" << t.id << "] - " << t.descricao << " " << t.data << " || (" << concluida << ")\n";
+    }
 }
 
 bool ListaTarefas::salvar(const string& caminho) const {

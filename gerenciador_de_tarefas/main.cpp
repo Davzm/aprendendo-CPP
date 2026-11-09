@@ -2,7 +2,7 @@
 #include <limits>
 #include <string>
 
-#include "gerenciador.h++"
+#include "gerenciador.hpp"
 
 using namespace std;
 
@@ -33,7 +33,8 @@ int lerInt() {
 int main() {
     ListaTarefas lista;
     lista.carregar(ARQUIVO);  // se o arquivo não existir, só retorna false
-
+    int id;
+    bool resultado;
     int opcao;
     do {
         mostrarMenu();
@@ -53,12 +54,25 @@ int main() {
                 lista.listar();
                 break;
             case 3:
-                // TODO: pedir o id, chamar lista.concluir(id)
-                //       e avisar se não encontrou.
+                cout << "id ";
+                cin >> id;
+                resultado = lista.concluir(id);
+                if(resultado == false){
+                    cout << "Tarefa não encontrada\n";
+                }else{
+                    cout << "Tarefa " << id << " concluída\n";
+                }
                 break;
             case 4:
-                // TODO: pedir o id, chamar lista.remover(id)
-                //       e avisar se não encontrou.
+                cout << "id ";
+                cin >> id;
+                resultado = lista.remover(id);
+                if(resultado == false){
+                    cout << "Tarefa não encontrada\n";
+                }else{
+                    cout << "Tarefa " << id << "removida\n";
+                }
+                
                 break;
             case 0:
                 cout << "Saindo...\n";
