@@ -1,6 +1,8 @@
 #include "gerenciador.hpp"
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <sstream>
 using namespace std;
 
 void ListaTarefas::adicionar(const string& descricao, const string& data) {
@@ -11,6 +13,7 @@ void ListaTarefas::adicionar(const string& descricao, const string& data) {
     t.descricao = descricao;
     t.data = data;
     t.id = proximoId;
+    t.concluida = false;
     tarefas.push_back(t);
     proximoId++;    
 }
@@ -57,7 +60,7 @@ void ListaTarefas::listar() const {
         return;
     }
     string concluida;
-    for(Tarefa t : tarefas){
+    for(const Tarefa& t : tarefas){
         if(t.concluida == true){
             concluida = "concluida";
         }else{
@@ -70,15 +73,55 @@ void ListaTarefas::listar() const {
 bool ListaTarefas::salvar(const string& caminho) const {
     // TODO (etapa 4): abrir ofstream, gravar uma tarefa por linha.
     // Cuidado: a descrição pode ter espaços, então use um separador (';').
-    (void)caminho;
-    return false;
+    ofstream arq(caminho);
+    if(!arq) return false;
+
+
+    for(const Tarefa& t : tarefas){
+        arq << t.id << ";" << t.descricao << ";" << t.data << ";" << t.concluida << "\n";
+    }
+
+    return true;
 }
 
 bool ListaTarefas::carregar(const string& caminho) {
     // TODO (etapa 4): abrir ifstream, ler linha a linha com getline
     // e reconstruir as tarefas. Lembre de atualizar proximoId.
-    (void)caminho;
-    return false;
+    ifstream arq(caminho);
+    if(!arq) return false;
+
+    tarefas.clear();
+    proximoId = 1;
+    string linha;
+
+    while(getline(arq, linha)){
+        if(linha.empty()) continue;
+        Tarefa t;
+        stringstream ss(linha);
+        string campoID, descricao, data, campoConcluido;
+
+        if (!getline(ss, campoID, ';') ||
+            !getline(ss, descricao, ';') ||
+            !getline(ss, data, ';') ||
+            !getline(ss, campoConcluido, ';')) {
+            continue;
+        }
+
+        t.id = stoi(campoID);
+        t.descricao = descricao;
+        t.data = data;
+        t.concluida = (campoConcluido == "1");
+
+        tarefas.push_back(t);
+        if (t.id >= proximoId) {
+            proximoId = t.id + 1;
+
+        }
+
+    
+    }
+    return true;
+
 }
 
 bool ListaTarefas::vazia() const {
