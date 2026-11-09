@@ -33,8 +33,6 @@ int lerInt() {
 int main() {
     ListaTarefas lista;
     lista.carregar(ARQUIVO);  // se o arquivo não existir, só retorna false
-    int id;
-    bool resultado;
     int opcao;
     do {
         mostrarMenu();
@@ -54,23 +52,27 @@ int main() {
                 lista.listar();
                 break;
             case 3:
+                int id1;
+                bool resultado1;
                 cout << "id ";
-                cin >> id;
-                resultado = lista.concluir(id);
-                if(resultado == false){
+                id1 = lerInt();
+                resultado1 = lista.concluir(id1);
+                if(resultado1 == false){
                     cout << "Tarefa não encontrada\n";
                 }else{
-                    cout << "Tarefa " << id << " concluída\n";
+                    cout << "Tarefa " << id1 << " concluída\n";
                 }
                 break;
             case 4:
+                int id2;
+                bool resultado2;
                 cout << "id ";
-                cin >> id;
-                resultado = lista.remover(id);
-                if(resultado == false){
+                id2 = lerInt();
+                resultado2 = lista.remover(id2);
+                if(resultado2 == false){
                     cout << "Tarefa não encontrada\n";
                 }else{
-                    cout << "Tarefa " << id << "removida\n";
+                    cout << "Tarefa " << id2 << " removida\n";
                 }
                 
                 break;
