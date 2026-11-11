@@ -66,7 +66,7 @@ void ListaTarefas::listar() const {
         }else{
             concluida = "não concluida";
         }
-        cout << "[" << t.id << "] - " << t.descricao << " " << t.data << " || (" << concluida << ")\n";
+        cout << "[" << t.id << "] - " << t.descricao << " - " << t.data << " || (" << concluida << ")\n";
     }
 }
 
@@ -107,7 +107,12 @@ bool ListaTarefas::carregar(const string& caminho) {
             continue;
         }
 
-        t.id = stoi(campoID);
+        try{
+            t.id = stoi(campoID);
+        }catch(const exception&){
+            continue;
+        }
+
         t.descricao = descricao;
         t.data = data;
         t.concluida = (campoConcluido == "1");
