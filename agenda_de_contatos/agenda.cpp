@@ -1,6 +1,8 @@
 #include "agenda.hpp"
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -40,4 +42,47 @@ void Agenda :: listar_contatos() const {
     for(const auto& [nome, contato] : contatos){
         cout << nome << " || " << contato.numero << "\n";
     }
+}
+
+bool Agenda :: salvar(const std::string& caminho) const {
+    ofstream arq(caminho);
+    if(!arq) return false;
+
+    for(const auto& [nome, contato] : contatos){
+        arq << nome << ";" << contato.numero << "\n";
+    }
+    return true;
+}
+
+
+
+bool Agenda ::carregar(const string& caminho) {
+    ifstream arq(caminho);
+    if(!arq) return false;
+
+    contatos.clear();
+    string linha;
+
+    while(getline(arq, linha)){
+        if(linha.empty()) continue;
+        Contato ctt;
+        stringstream ss(linha);
+        string nome, numero;
+
+        if (!getline(ss, nome, ';') ||
+            !getline(ss, numero, '\n')){
+            continue;
+        }
+
+        ctt.nome = nome;
+        ctt.numero = numero;
+
+        auto [it, inseriu] = contatos.insert({nome, ctt});
+        if(!inseriu){
+            cout << "Arquivo corrompido\n";
+        }
+    
+    }
+    return true;
+
 }

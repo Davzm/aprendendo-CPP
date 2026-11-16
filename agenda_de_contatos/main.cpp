@@ -2,9 +2,11 @@
 #include "agenda.hpp"
 using namespace std;
 
+static const string ARQUIVO = "agenda.txt";
+
 int main(void){
     Agenda ag;
-
+    ag.carregar(ARQUIVO);
     int decisao;
 
     do{
@@ -32,7 +34,7 @@ int main(void){
                 if(deu_certo){
                     cout << "\nContato adicionado!\n";
                 }else{
-                    cout << "\nAlgo deu errado...\n";
+                    cout << "\nContato já existe...\n";
                 }
                 break;
             }
@@ -51,7 +53,7 @@ int main(void){
                 if(deu_certo){
                     cout << "\nContato removido!\n";
                 }else{
-                    cout << "\nAlgo deu errado...";
+                    cout << "\nContato não encontrado...\n";
                 }
                 break;
             }
@@ -62,14 +64,19 @@ int main(void){
                 ag.buscar_contato_nome(nome);
                 break;
             }
+
             case 0:
                 cout << "\nEncerrado...\n";
                 break;
+            
+            default:
+                cout << "Opção inválida\n";
         }   
 
 
     }while(decisao != 0);
 
+    ag.salvar(ARQUIVO);
 
     return 0;
 }
