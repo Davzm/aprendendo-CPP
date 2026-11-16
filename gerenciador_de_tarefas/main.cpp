@@ -51,31 +51,33 @@ int main() {
             case 2:
                 lista.listar();
                 break;
-            case 3:
-                int id1;
-                bool resultado1;
+            case 3:{
+                int id;
+                bool resultado;
                 cout << "id ";
-                id1 = lerInt();
-                resultado1 = lista.concluir(id1);
-                if(resultado1 == false){
+                id = lerInt();
+                resultado = lista.concluir(id);
+                if(!resultado){
                     cout << "Tarefa não encontrada\n";
                 }else{
-                    cout << "Tarefa " << id1 << " concluída\n";
+                    cout << "Tarefa " << id << " concluída\n";
                 }
                 break;
-            case 4:
-                int id2;
-                bool resultado2;
+            }
+            case 4:{
+                int id;
+                bool resultado;
                 cout << "id ";
-                id2 = lerInt();
-                resultado2 = lista.remover(id2);
-                if(resultado2 == false){
+                id = lerInt();
+                resultado = lista.remover(id);
+                if(!resultado){
                     cout << "Tarefa não encontrada\n";
                 }else{
-                    cout << "Tarefa " << id2 << " removida\n";
+                    cout << "Tarefa " << id << " removida\n";
                 }
                 
                 break;
+            }
             case 0:
                 cout << "Saindo...\n";
                 break;
